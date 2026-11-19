@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Мінцифри — Електронний підпис</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="config.js"></script>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brandmark">М</div>
+      <div><div class="brand">МІНЦИФРИ</div><div class="subbrand">Центр електронного підпису</div></div>
+      <span class="demo">ДЕМО</span>
+    </header>
+    <main>
+      <section id="home" class="screen active">
+        <div class="welcome">
+          <div class="eyebrow">ЦИФРОВІ СЕРВІСИ</div>
+          <h1>Документи.<br><span>Підпис. Перевірка.</span></h1>
+          <p>Демонстраційний сервіс персонального електронного підпису.</p>
+        </div>
+        <div class="key-card">
+          <div class="card-head"><span>ОСОБИСТИЙ КЛЮЧ</span><span class="dot"></span></div>
+          <div id="keyStatus" class="key-status">Перевіряємо ключ…</div>
+          <div id="fingerprintShort" class="fingerprint">Ключ ще не створено</div>
+          <button class="btn btn-light" id="createKeyBtn">Створити / відновити ключ</button>
+        </div>
+        <div class="section-title">Мої інструменти</div>
+        <div class="tiles">
+          <button class="tile" data-go="sign"><span class="tile-icon">✍</span><b>Підписати документ</b><small>Створити новий підпис</small></button>
+          <button class="tile" data-go="verify"><span class="tile-icon">⌕</span><b>Перевірити підпис</b><small>За номером або QR</small></button>
+          <button class="tile" data-go="history"><span class="tile-icon">▤</span><b>Мої документи</b><small>Історія підписів</small></button>
+          <button class="tile" data-go="key"><span class="tile-icon">◇</span><b>Мій ключ</b><small>Ідентифікатор і статус</small></button>
+        </div>
+        <div class="notice"><b>Важливо</b><p>Це демонстраційна система. Її підписи не є КЕП і не мають статусу державної сертифікації.</p></div>
+      </section>
+
+      <section id="sign" class="screen">
+        <button class="back" data-go="home">← Головна</button>
+        <div class="eyebrow">НОВИЙ ЗАПИС</div><h2>Підписання документа</h2>
+        <p class="muted">Заповни інформацію. Після підтвердження буде створено унікальний номер підпису.</p>
+        <form id="signForm" class="form">
+          <label>Номер документа<input name="document_number" required maxlength="80" placeholder="Наприклад, 014/2026"></label>
+          <label>Назва документа<input name="title" required maxlength="160" placeholder="Наказ про…"></label>
+          <label>Опис документа<textarea name="description" required maxlength="1200" rows="3" placeholder="Короткий зміст документа"></textarea></label>
+          <label>ПІБ підписувача<input name="signer_name" required maxlength="120" placeholder="Ім’я та прізвище"></label>
+          <label>Посада<input name="signer_position" required maxlength="120" placeholder="Наприклад, керівник відділу"></label>
+          <button class="btn" type="submit">Підписати документ</button>
+        </form>
+        <div id="signResult" class="result hidden"></div>
+      </section>
+
+      <section id="verify" class="screen">
+        <button class="back" data-go="home">← Головна</button>
+        <div class="eyebrow">ПУБЛІЧНИЙ РЕЄСТР</div><h2>Перевірка підпису</h2>
+        <p class="muted">Введи номер підпису або відкрий QR-посилання.</p>
+        <form id="verifyForm" class="form">
+          <label>Номер електронного підпису<input id="verifyId" required placeholder="MCO-2026-…"></label>
+          <button class="btn" type="submit">Перевірити</button>
+        </form>
+        <div id="verifyResult" class="result hidden"></div>
+      </section>
+
+      <section id="history" class="screen">
+        <button class="back" data-go="home">← Головна</button>
+        <div class="eyebrow">АРХІВ</div><h2>Мої документи</h2>
+        <div id="historyList" class="list"><p class="muted">Завантаження…</p></div>
+      </section>
+
+      <section id="key" class="screen">
+        <button class="back" data-go="home">← Головна</button>
+        <div class="eyebrow">ПЕРСОНАЛЬНИЙ ПРОФІЛЬ</div><h2>Мій електронний ключ</h2>
+        <div class="panel">
+          <div class="panel-label">СТАТУС</div><b id="keyStatusDetail">Не створено</b>
+          <div class="panel-label">ВІДКРИТИЙ ІДЕНТИФІКАТОР (SHA-256)</div><code id="fingerprintFull">—</code>
+          <p class="muted small">Приватний ключ залишається у сховищі браузера на цьому пристрої. Сервер отримує лише відкритий ключ.</p>
+          <button class="btn" id="createKeyBtn2">Створити / відновити ключ</button>
+        </div>
+        <div class="notice"><b>Не видаляй дані застосунку</b><p>У цій версії немає резервного копіювання приватного ключа. Після очищення даних браузера ключ може бути втрачено.</p></div>
+      </section>
+    </main>
+    <nav class="bottom">
+      <button data-go="home" class="nav-item active"><span>⌂</span>Головна</button>
+      <button data-go="sign" class="nav-item"><span>✍</span>Підпис</button>
+      <button data-go="verify" class="nav-item"><span>⌕</span>Перевірка</button>
+      <button data-go="history" class="nav-item"><span>▤</span>Документи</button>
+    </nav>
+    <footer>МІНЦИФРИ · ДЕМОНСТРАЦІЙНА СИСТЕМА</footer>
+  </div>
+  <script src="app.js"></script>
+</body></html>
