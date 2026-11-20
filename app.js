@@ -197,7 +197,8 @@ async function loginAccount(login, password) {
 
 async function afterLogin() {
   if (user.password_change_required) {
-    show("change-password");
+    show("profile");
+    await loadProfile();
     return;
   }
 
