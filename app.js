@@ -246,7 +246,7 @@ const loginForm = $("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", async event => {
     event.preventDefault();
-    alert("Кнопка входу працює");
+    
 
     const fields = formValues(loginForm);
     setBusy(loginForm, true);
@@ -418,6 +418,7 @@ if (changePasswordForm) {
   changePasswordForm.addEventListener("submit", async event => {
     event.preventDefault();
     setBusy(changePasswordForm, true);
+    alert("Кнопка зміни пароля працює");
 
     try {
       const f = formValues(changePasswordForm);
