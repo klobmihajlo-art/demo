@@ -616,7 +616,7 @@ async function refreshKeyView() {
 
     render(
       "keyStatusDetail",
-      "Активний демонстраційний ключ ECDSA P-256"
+      "Активний ключ ECDSA P-256"
     );
 
     render(
@@ -665,7 +665,7 @@ async function refreshHome() {
 async function handleCreateKey() {
   try {
     await createPersonalKey();
-    alert("Особистий демонстраційний ключ створено.");
+    alert("Особистий ключ створено.");
   } catch (error) {
     alert(error.message);
   }
@@ -801,7 +801,7 @@ async function signDocument(form) {
 
     <div class="data-row">
       <span>Статус</span>
-      <b>Дійсний демонстраційний підпис</b>
+      <b>Дійсний підпис</b>
     </div>
 
     <div class="qr" id="qrBox"></div>
@@ -898,7 +898,7 @@ function printSignatureCard(payload, result, url) {
     </head>
     <body>
       <h1>МЦО — Е-ПІДПИС</h1>
-      <p>Картка демонстраційного електронного підпису</p>
+      <p>Картка електронного підпису</p>
 
       ${rows.map(([label, value]) => `
         <div class="row">
@@ -911,7 +911,7 @@ function printSignatureCard(payload, result, url) {
       <p>Перевірка: ${esc(url)}</p>
 
       <footer>
-        Демонстраційна система. Не є державним КЕП.
+        МІНІСТЕРСТВО ЦИФРОВОЇ ОСВІТИ Не є державним КЕП.
       </footer>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
