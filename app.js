@@ -255,7 +255,7 @@ if (loginForm) {
         String(fields.password || "")
       );
 
-      loginForm.reset();
+     console.log("Вхід успішний, форму не очищено");
     } catch (error) {
       message("loginResult", error.message, true);
     } finally {
