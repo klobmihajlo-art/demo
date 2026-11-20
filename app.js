@@ -245,6 +245,7 @@ const loginForm = $("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", async event => {
     event.preventDefault();
+    alert("Кнопка входу працює");
 
     const fields = formValues(loginForm);
     setBusy(loginForm, true);
