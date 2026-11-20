@@ -412,7 +412,7 @@ if (emailVerifyForm) {
   });
 }
 
-const changePasswordForm = $("changePasswordForm");
+const changePasswordForm = $("passwordForm");
 
 if (changePasswordForm) {
   changePasswordForm.addEventListener("submit", async event => {
