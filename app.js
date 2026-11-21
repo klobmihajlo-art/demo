@@ -193,7 +193,9 @@ async function loginAccount(login, password) {
 
   token = result.access_token;
   user = result.user;
-
+  
+updateAdminAccess();
+  
   if (!token || !user) {
     throw new Error("Сервер не повернув дані авторизації.");
   }
