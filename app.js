@@ -30,6 +30,21 @@ const STORE = "keys";
 const isAdmin = () =>
   ["minister", "deputy"].includes(user?.role);
 function updateAdminAccess() {
+  const allowed = isAdmin();
+
+  const buttons = [
+    "adminAccessBtn",
+    "adminTile"
+  ];
+
+  buttons.forEach(id => {
+    const button = document.getElementById(id);
+
+    if (button) {
+      button.classList.toggle("hidden", !allowed);
+    }
+  });
+}
   const button = document.getElementById("adminAccessBtn");
   if (!button) return;
 
