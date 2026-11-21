@@ -1380,51 +1380,66 @@ async function loadAdmin() {
   }
 }
 
-async function editUser(id, users) {
-  const target = users.find(u => u.telegram_id === id);
 
-  if (!target) return;
+async function editUser(id, users) {
+  const target = users.find(
+    u => String(u.telegram_id) === String(id)
+  );
+
+  if (!target) {
+    alert("Користувача не знайдено.");
+    return;
+  }
 
   if (target.role === "minister") {
     alert("Профіль Міністра захищено.");
     return;
   }
 
-  const position = prompt(
-    "Нова посада:",
-    target.position || ""
-  );
+  const form = $("adminEditForm");
 
-  if (position === null) return;
-
-  const status = prompt(
-    "Статус: active або blocked",
-    target.status
-  );
-
-  if (status === null) return;
-
-  if (!["active", "blocked"].includes(status)) {
-    alert("Недійсний статус.");
+  if (!form) {
+    alert("Сторінку редагування не знайдено.");
     return;
   }
 
-  try {
-    await api(
-      "/api/admin/users/" + encodeURIComponent(id),
-      {
-        method: "PATCH",
-        body: JSON.stringify({
-          position,
-          status
-        })
-      }
-    );
+  $("editUserTelegramId").textContent = target.telegram_id;
+  $("editUserLogin").textContent = target.login;
 
-    await loadAdmin();
-  } catch (error) {
-    alert(error.message);
+  const fields = [
+    "first_name",
+    "last_name",
+    "email",
+    "birth_date",
+    "position",
+    "role",
+    "status"
+  ];
+
+  fields.forEach(name => {
+    const input = form.elements.namedItem(name);
+
+    if (input) {
+      input.value = target[name] || "";
+    }
+  });
+
+  form.dataset.telegramId = target.telegram_id;
+  form.dataset.originalEmail = target.email || "";
+
+  const roleInput = form.elements.namedItem("role");
+
+  if (roleInput) {
+    roleInput.disabled = user.role !== "minister";
   }
+
+  const result = $("adminEditResult");
+  if (result) {
+    result.classList.add("hidden");
+    result.textContent = "";
+  }
+
+  show("adminEdit");
 }
 
 async function resetUserPassword(id) {
