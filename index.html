@@ -98,9 +98,14 @@
       <div id="profileResult" class="result hidden" role="status"></div>
       <div class="panel"><h3>Підтвердження пошти</h3><button class="btn" id="sendEmailCodeBtn" type="button">Надіслати код</button><form id="emailVerifyForm" class="form"><label>Код із листа<input name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="6 цифр"></label><button class="btn" type="submit">Підтвердити email</button></form><div id="emailResult" class="result hidden" role="status"></div></div>
       <div class="panel"><h3>Зміна пароля</h3><form id="passwordForm" class="form"><label>Поточний пароль<input name="current_password" type="password" autocomplete="current-password" required></label><label>Новий пароль<input name="new_password" type="password" minlength="12" autocomplete="new-password" required></label><button class="btn" type="submit">Змінити пароль</button></form><div id="passwordResult" class="result hidden" role="status"></div></div>
-      <button id="logoutBtn" class="btn" type="button">Вийти з кабінету</button>
-    </section>
+     <button id="adminAccessBtn" class="btn hidden" data-go="admin" type="button">
+  Адміністрування
+</button>
 
+<button id="logoutBtn" class="btn" type="button">
+  Вийти з кабінету
+</button>
+</section>
     <section id="admin" class="screen" aria-labelledby="adminTitle">
       <button class="back" data-go="home" type="button">← Головна</button><div class="eyebrow">ДОСТУП ЗА РОЛЛЮ</div><h2 id="adminTitle">Адміністрування</h2><p class="muted">Функції доступні Міністру та заступнику відповідно до їхніх повноважень.</p>
       <div id="adminStats" class="panel">Завантаження статистики…</div>
