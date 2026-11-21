@@ -600,6 +600,7 @@ async function createPersonalKey() {
   await refreshKeyView();
 }
 
+
 async function refreshKeyView() {
   if (!user) return;
 
@@ -607,31 +608,34 @@ async function refreshKeyView() {
     const server = await api("/api/my/key");
     const local = await loadLocalKey();
 
-    if (!server.found) {
-      render(
-        "keyStatusDetail",
-        "Особистий ключ ще не створено."
-      );
+    if (!server.found || !server.key) {
+      render("keyStatusDetail", "Ключ ще не створено.");
+      render("fingerprintFull", "—");
       return;
     }
 
-    if (!local || fingerprint !== server.key.fingerprint) {
-      render(
-        "keyStatusDetail",
-        "Ключ зареєстровано, але його приватна частина недоступна на цьому пристрої."
-      );
-      return;
-    }
+    const serverFingerprint = server.key.fingerprint || "";
+    const available = Boolean(
+      local && fingerprint === serverFingerprint
+    );
 
     render(
       "keyStatusDetail",
-      "Активний ключ ECDSA P-256"
+      available
+        ? "Активний ключ ECDSA P-256"
+        : "Ключ зареєстрований. Приватна частина недоступна на цьому пристрої."
     );
 
     render(
       "fingerprintFull",
-      esc(fingerprint)
+      esc(serverFingerprint || "—")
     );
+
+    const createButton = $("createKeyBtn2");
+    if (createButton) {
+      createButton.classList.add("hidden");
+    }
+
   } catch (error) {
     render(
       "keyStatusDetail",
@@ -639,6 +643,7 @@ async function refreshKeyView() {
     );
   }
 }
+
 
 async function refreshHome() {
   if (!user) return;
