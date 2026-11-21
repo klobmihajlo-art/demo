@@ -106,13 +106,65 @@
   Вийти з кабінету
 </button>
 </section>
-    <section id="admin" class="screen" aria-labelledby="adminTitle">
-      <button class="back" data-go="home" type="button">← Головна</button><div class="eyebrow">ДОСТУП ЗА РОЛЛЮ</div><h2 id="adminTitle">Адміністрування</h2><p class="muted">Функції доступні Міністру та заступнику відповідно до їхніх повноважень.</p>
-      <div id="adminStats" class="panel">Завантаження статистики…</div>
-      <div class="panel"><h3>Створити користувача</h3><form id="createUserForm" class="form"><label>Telegram ID<input name="telegram_id" inputmode="numeric" pattern="[0-9]{1,20}" required></label><label>Логін<input name="login" minlength="3" maxlength="64" required></label><label>Тимчасовий пароль<input name="temporary_password" type="password" minlength="12" required></label><label>Роль<select name="role"><option value="user">Користувач</option><option value="deputy">Заступник Міністра</option></select></label><button class="btn" type="submit">Створити обліковий запис</button></form><div id="createUserResult" class="result hidden" role="status"></div></div>
-      <h3>Користувачі</h3><div id="adminUsers" class="list"></div>
-      <h3>Журнал дій</h3><div id="adminAudit" class="list"></div>
-    </section>
+   
+<section id="adminEdit" class="screen" aria-labelledby="adminEditTitle">
+  <button class="back" data-go="admin" type="button">← Адміністрування</button>
+  <div class="eyebrow">УПРАВЛІННЯ КОРИСТУВАЧАМИ</div>
+  <h2 id="adminEditTitle">Редагування користувача</h2>
+
+  <div class="panel">
+    <div class="panel-label">TELEGRAM ID</div>
+    <b id="editUserTelegramId">—</b>
+    <div class="panel-label">ЛОГІН</div>
+    <b id="editUserLogin">—</b>
+  </div>
+
+  <form id="adminEditForm" class="form">
+    <label>Ім'я
+      <input name="first_name" maxlength="120" />
+    </label>
+
+    <label>Прізвище
+      <input name="last_name" maxlength="120" />
+    </label>
+
+    <label>Електронна пошта
+      <input name="email" type="email" autocomplete="off" />
+    </label>
+
+    <p class="muted small">
+      Після зміни електронної пошти користувач повинен
+      самостійно підтвердити нову адресу.
+    </p>
+
+    <label>Дата народження
+      <input name="birth_date" type="date" />
+    </label>
+
+    <label>Посада
+      <input name="position" maxlength="120" />
+    </label>
+
+    <label>Роль
+      <select name="role">
+        <option value="user">Користувач</option>
+        <option value="deputy">Заступник міністра</option>
+      </select>
+    </label>
+
+    <label>Статус
+      <select name="status">
+        <option value="active">Активний</option>
+        <option value="blocked">Заблокований</option>
+      </select>
+    </label>
+
+    <button class="btn" type="submit">Зберегти зміни</button>
+  </form>
+
+  <div id="adminEditResult" class="result hidden" role="status"></div>
+</section>
+
   </main>
   <nav id="bottomNav" class="bottom hidden" aria-label="Основна навігація">
     <button class="nav-item active" data-go="home" type="button"><span>⌂</span>Головна</button>
