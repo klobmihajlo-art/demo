@@ -29,6 +29,12 @@ const STORE = "keys";
 
 const isAdmin = () =>
   ["minister", "deputy"].includes(user?.role);
+function updateAdminAccess() {
+  const button = document.getElementById("adminAccessBtn");
+  if (!button) return;
+
+  button.classList.toggle("hidden", !isAdmin());
+}
 
 const ready = () =>
   user &&
