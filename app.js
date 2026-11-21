@@ -284,6 +284,7 @@ if (logoutButton) {
 
 async function refreshUser() {
   user = await api("/api/me");
+  updateAdminAccess();
   return user;
 }
 
